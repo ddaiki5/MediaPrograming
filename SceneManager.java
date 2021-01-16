@@ -21,7 +21,7 @@ public class SceneManager {
     public void changeScene(){
         switch(sceneNum){
             case 0:
-                view.change(new TitleView(this));
+                view.change(new TitleView1(this));
                 break;
             case 1:
                 view.change(new GameView(model, c, this));
