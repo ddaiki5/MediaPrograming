@@ -30,7 +30,7 @@ public class Enemy1 extends Character{
     protected int wayx = -1;
     protected int end = 0, through = 0;
     public Enemy1(int x, int y){
-        super(x, y, 32, 32, 1000, 1);
+        super(x, y, 32, 32, 1, 1);
     }
 
     public void update(Field field){

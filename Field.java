@@ -25,12 +25,18 @@ public class Field {
     private int[][] map;
     private float cs = 32;//cell_size
     private int ROW, COL;
-    public boolean goal = false;
+    //public boolean goal = false;
     public int WIDTH,HEIGHT;
     private ImageIcon icon;
     private Image i13,i40,i117,i194;
     private int IMAGESIZE = 18;
-    public Field(){
+    private int offsetX,offsetY;
+    private Model model;
+    public Field(Model model){
+        init(model);
+    }
+    //初期化用
+    public void init(Model model){
         loadField("map1.csv");
         icon = new ImageIcon(getClass().getResource("map/13.png"));
         i13 = icon.getImage();
@@ -40,11 +46,27 @@ public class Field {
         i194 = icon.getImage();
         icon = new ImageIcon(getClass().getResource("map/117.png"));
         i117 = icon.getImage();
+        offsetX = 0;
+        offsetY = 0;
+        this.model = model;
+        //goal = false;
+        model.createPlayer(100, 250);
     }
-    public int getRow(){return ROW;}
-    public int getCol(){return COL;}
-    public float getCs(){return cs;}
-    public void draw(Graphics g, int offsetX, int offsetY){
+    //viewで毎フレーム呼ばれる
+    public void update(Dimension size){
+        updateOffset(size);
+    }
+    //offsetのアップデート
+    private void updateOffset(Dimension size){
+        offsetX = size.width/2-(int)model.player.getX();
+        offsetY = size.height/2-(int)model.player.getY();
+        offsetX = Math.min(offsetX, 0);
+        offsetX = Math.max(offsetX, size.width - WIDTH);
+        offsetY = Math.min(offsetY, 0);
+        offsetY = Math.max(offsetY, size.height - HEIGHT);
+    }
+    //描画処理
+    public void draw(Graphics g){
         for(int i=0;i<ROW;i++){
             for(int j=0;j<COL;j++){
                 switch(map[i][j]){
@@ -75,25 +97,7 @@ public class Field {
             }
         }
     }
-    public boolean isHit(int i, int j){
-        if(map[i][j]>0){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    public void setNum(int i, int j, int n){
-        map[i][j] = n;
-    }
-    public int getNum(int i, int j){
-        return map[i][j];
-    }
-    public float getBlockX(int i, int j){
-        return j*cs;
-    }
-    public float getBlockY(int i, int j){
-        return i*cs;
-    }
+    //mapとキャラのあたり判定用
     public boolean collisionCheck(int i, int j, Character c){
         float bx=j*cs;
         float by=i*cs;
@@ -101,17 +105,18 @@ public class Field {
             if(Math.abs(c.getY()-by)<(cs+c.getHeight())/2f){
                 if(map[i][j]>0){
                     if(map[i][j]==117){
-                        goal = true;
+                        model.goal = true;
                     }
                     return true;
                 }
                 
             }
         }
+
         return false;
     }
-
-    public void loadField(String fileName){
+    //csvファイル読み込み
+    private void loadField(String fileName){
         try{
             BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("map/"+fileName)));
             String line = br.readLine();
@@ -142,6 +147,35 @@ public class Field {
         }
         
     }
+    //以下get,set関数
+    public int getRow(){return ROW;}
+    public int getCol(){return COL;}
+    public float getCs(){return cs;}
+    public int getOffsetX(){
+        return offsetX;
+    }
+    public int getOffsetY(){
+        return offsetY;
+    }
+    public void setNum(int i, int j, int n){
+        map[i][j] = n;
+    }
+    public int getNum(int i, int j){
+        return map[i][j];
+    }
+    public float getBlockX(int i, int j){
+        return j*cs;
+    }
+    public float getBlockY(int i, int j){
+        return i*cs;
+    }
+    // public boolean isHit(int i, int j){
+    //     if(map[i][j]>0){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
     
 }
 

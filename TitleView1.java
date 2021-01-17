@@ -16,8 +16,8 @@ public class TitleView1 extends JPanel  implements KeyListener{
         this.sceneManager = sceneManager;
         //c = new TitleController(this);
         addKeyListener(this);
-        setFocusable(true);
-        this.requestFocusInWindow();
+        //setFocusable(true);
+        //this.requestFocusInWindow();
     }
     public void paintComponent(Graphics g) {
 		super.paintComponent(g);

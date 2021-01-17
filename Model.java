@@ -6,20 +6,24 @@ import java.util.*;
 public class Model extends Observable{
     protected ArrayList<Character> chara;
     protected Player player;
-    protected boolean canMove, canJump;
+    protected boolean canMove, canJump;//使われていない
     protected Field field;
     private boolean pressedKeyRight, pressedKeyLeft;
     private SceneManager sceneManager;
+    public boolean goal,gameOver;
     //Enemy1 e1;
     public Model(){
-        chara = new ArrayList<Character>();
-        player = null;
-        field = new Field();
-        //sceneManager = new SceneManager();
+        init();
     }
     //初期化用
     public void init(){
-
+        chara = new ArrayList<Character>();
+        player = null;
+        field = new Field(this);
+        pressedKeyRight= false;
+        pressedKeyLeft = false;
+        goal = false;
+        gameOver = false;
     }
     
     public void createPlayer(int x, int y){//Player作成用
@@ -62,7 +66,7 @@ public class Model extends Observable{
         }
         
         //e1.update(field);
-        //gameOverCheck();
+        gameOverCheck();
     }
     //controllerで呼び出し
     public void move(int d, boolean f){
@@ -87,8 +91,9 @@ public class Model extends Observable{
                 if(c1.getCharacterNum()==0){//playerとenemyのあたり判定
                     if(c1.getDamageCount()==0){//無敵でないなら
                         if(c1.pY+c1.getHeight()<c2.getY()){//上から
+                            //player.jump();
                             c2.damaged(1);//enemyにダメージ
-                            c1.setVy(0);
+                            c1.setVy(-3);
                         }else{
                             c1.damaged(1);//playerにダメージ
                         }
@@ -107,14 +112,15 @@ public class Model extends Observable{
     //playerのhpがゼロになったかをチェックする
     public void gameOverCheck(){
         if(player.getHp()<=0){
-            sceneManager.changeScene();
+            gameOver = true;
         }
-        if(player.getX()<0||player.getX()>field.getCs()*field.getCol()){
-            if(player.getY()<0||player.getY()>field.getCs()*field.getRow()){
-                sceneManager.changeScene();
-                
-            }
+        if(player.getX()<0||player.getX()>field.WIDTH){
+            gameOver = true;
         }
+        if(player.getY()<0||player.getY()>field.HEIGHT){
+            gameOver = true;
+        }
+        
     }
     //get.set関数
     public ArrayList<Character> getCharactors(){

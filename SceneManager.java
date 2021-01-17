@@ -24,6 +24,7 @@ public class SceneManager {
                 view.change(new TitleView1(this));
                 break;
             case 1:
+                model.init();
                 view.change(new GameView(model, c, this));
                 break;
         }
