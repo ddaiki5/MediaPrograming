@@ -22,7 +22,7 @@ public class TitleView extends JPanel implements KeyListener{
         //timer = new javax.swing.Timer(10, this);
     }
     public void changeScene(){
-        this.setFocusable(false);
+        //this.setFocusable(false);
         sceneManager.setSceneNum(1);
         sceneManager.changeScene();
     }

@@ -12,13 +12,17 @@ public class View extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(500,500);
 		setLocationRelativeTo(null);
-		setResizable(false);
+        setResizable(false);
+        //pack();
     }
+    
     public void change(JPanel panel){
         getContentPane().removeAll();
         super.add(panel);
         validate();
         repaint();
+        panel.setFocusable(true);
+        panel.requestFocusInWindow();
     }
 }
 

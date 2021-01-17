@@ -14,12 +14,12 @@ public class GameView extends JPanel implements Observer, ActionListener{
     model = m;
     this.setBackground(Color.white);
     //this.requestFocusInWindow();
-    this.setFocusable(true);
+    setFocusable(true);
     this.addMouseListener(c);
     this.addMouseMotionListener(c);
     //this.requestFocus();
     //this.setFocusable(true);
-    this.addKeyListener(c);
+    addKeyListener(c);
     timer = new javax.swing.Timer(10, this);
     timer.start();
     //model = m;

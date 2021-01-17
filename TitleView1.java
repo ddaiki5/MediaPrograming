@@ -15,41 +15,30 @@ public class TitleView1 extends JPanel  implements KeyListener{
     TitleView1(SceneManager sceneManager){
         this.sceneManager = sceneManager;
         //c = new TitleController(this);
-        this.addKeyListener(this);
-        this.setFocusable(true);
-        //this.requestFocusInWindow();
+        addKeyListener(this);
+        setFocusable(true);
+        this.requestFocusInWindow();
     }
     public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0,500,700);
-Font font = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,70);
-g.setFont(font);
-		g.setColor(Color.BLUE);
-
-       
-         
+        Font font = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,70);
+        g.setFont(font);
+		g.setColor(Color.BLUE); 
         g.drawString("横スクロール", 30, 100);
-        
-     
-        
-        
-        
-      
-
-Font font2 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,70);
-g.setFont(font2);
+        Font font2 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,70);
+        g.setFont(font2);
 		g.setColor(Color.BLUE);
         g.drawString("アクション", 150, 170);
-Font font3 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,20);
-g.setFont(font3);
+        Font font3 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,20);
+        g.setFont(font3);
 		g.setColor(Color.WHITE);
-        g.drawString("SPACEを押してスタート", 150, 350);
-       
+        g.drawString("SPACEを押してスタート", 150, 350);  
         //timer = new javax.swing.Timer(10, this);
     }
     public void changeScene(){
-        this.setFocusable(false);
+        //this.setFocusable(false);
         sceneManager.setSceneNum(1);
         sceneManager.changeScene();
     }
