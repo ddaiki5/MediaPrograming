@@ -105,7 +105,9 @@ public class Field {
             if(Math.abs(c.getY()-by)<(cs+c.getHeight())/2f){
                 if(map[i][j]>0){
                     if(map[i][j]==117){
-                        model.goal = true;
+                        if(c.getCharacterNum()==0){
+                            model.goal = true;
+                        }
                     }
                     return true;
                 }

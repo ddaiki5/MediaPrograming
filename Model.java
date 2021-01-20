@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.util.*;
 
 public class Model extends Observable{
-    protected ArrayList<Character> chara;
+    protected ArrayList<Character> chara,balls;
     protected Player player;
     protected boolean canMove, canJump;//使われていない
     protected Field field;
@@ -18,6 +18,7 @@ public class Model extends Observable{
     //初期化用
     public void init(){
         chara = new ArrayList<Character>();
+        //balls = new ArrayList<Ball>();
         player = null;
         field = new Field(this);
         pressedKeyRight= false;
@@ -50,9 +51,11 @@ public class Model extends Observable{
             player.moveX(0);
         }
         //落下と移動処理
-        for(Character f:chara){
-            f.update(field);
+        for(int i=0;i<chara.size();i++){
+            chara.get(i).update(field);
+            ballEndCheck(chara.get(i));
         }
+        
         //character同市のあたり判定
         for(int i=0;i<chara.size();i++){
             for(int j=i+1;j<chara.size();j++){
@@ -81,15 +84,40 @@ public class Model extends Observable{
     public void jump(){
         if(player!=null){
             player.jump();
+            shoot();
+        }
+    }
+    //ball攻撃
+    public void shoot(){
+        Ball ball;
+        if(player.dir==0){
+            ball = new Ball((int)player.getX()+player.getWidth()+6, (int)player.getY()+player.getHeight()/2);
+            ball.dir = 0;
+        }else{
+            ball = new Ball((int)player.getX()-6, (int)player.getY()+player.getHeight()/2);
+            ball.vx = -1.5f;
+            ball.dir = 1;
+        }
+        chara.add(ball);
+    }
+    //ballを消す
+    public void ballEndCheck(Character c){
+        if(c.getCharacterNum()==99){
+            if(c.hp<=0){
+                chara.remove(chara.indexOf(c));
+            }
         }
     }
     //キャラ同市のあたり判定
     public void collisionCheack(Character c1, Character c2){
         //矩形あたり判定
-        if(Math.abs(c1.getX()-c2.getX())<(c1.getWidth()+c2.getWidth())/2){
-            if(Math.abs(c1.getY()-c2.getY())<(c1.getHeight()+c2.getHeight())/2){
+        if(Math.abs(c1.getX()-c2.getX())<(c1.gw+c2.gw)/2){
+            if(Math.abs(c1.getY()-c2.getY())<(c1.gh+c2.gh)/2){
                 if(c1.getCharacterNum()==0){//playerとenemyのあたり判定
                     if(c1.getDamageCount()==0){//無敵でないなら
+                        if(c2.getCharacterNum()==99){//ballとの判定はない
+                            return;
+                        }
                         if(c1.pY+c1.getHeight()<c2.getY()){//上から
                             //player.jump();
                             c2.damaged(1);//enemyにダメージ
@@ -103,6 +131,9 @@ public class Model extends Observable{
                         //     c1.damaged(1);
                         // }
                     }
+                }else if(c1.getCharacterNum()==99 || c2.getCharacterNum()==99){
+                    c1.damaged(1);
+                    c2.damaged(1);
                 }
             }
         }

@@ -9,8 +9,11 @@ import java.io.*;
 public class Player extends Character{
     private static  final int IMAGESIZE = 32;
     private ImageIcon icon;
+    private Boolean isShootBall;
     public Player(int x, int y){
         super(x, y, 32, 32, 3, 0);
+        gw = gh = 32;
+        isShootBall = false;
     }
     //modelで呼び出し
     public void jump(){
@@ -27,16 +30,24 @@ public class Player extends Character{
         image = icon.getImage();
         //g.drawRect((int)x +offsetX, (int)y+offsetY, width, height);
         g.drawImage(image, (int)x +offsetX, (int)y+offsetY, (int)x +offsetX+(int)width+3, (int)y+offsetY+(int)height+3,IMAGESIZE+animationCount*(int)width+dir*IMAGESIZE*2+2, 0, IMAGESIZE+animationCount*(int)width+(int)width+dir*IMAGESIZE*2-2,IMAGESIZE, null);
-        count++;
-        if(count>=100){
+        if(Math.abs(vx)>0.1f){
+            count++;
+        }
+        if(count>=40){
             count = 0;
         }
-        if(count<50){
+        if(count<20){
             animationCount = 0;
-        }else if(count<100){
+        }else if(count<40){
             animationCount = 1;
         }
 
+    }
+
+    public void shoot(){
+        if(isShootBall){
+
+        }
     }
     // public void damaged(){
     //     if(mutekiTime==0){
@@ -47,4 +58,6 @@ public class Player extends Character{
     // }
     
 }
+
+
 

@@ -16,6 +16,7 @@ public class Character {
     protected int animationCount, count, damageCount;
     //一フレーム前の座標保存用
     public float pX, pY;
+    public int gw,gh;
     
     public Character(int x, int y, int w, int h, int hp, int characterNum){
         this.x = x;
