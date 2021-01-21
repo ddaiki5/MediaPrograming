@@ -26,6 +26,7 @@ public class Field {
     private float cs = 32;//cell_size
     private int ROW, COL;
     //public boolean goal = false;
+    private boolean is83;
     public int WIDTH,HEIGHT;
     private ImageIcon icon;
     private Image i13,i40,i117,i194;
@@ -48,9 +49,11 @@ public class Field {
         i117 = icon.getImage();
         offsetX = 0;
         offsetY = 0;
+        is83 = false;
         this.model = model;
         //goal = false;
-        model.createPlayer(100, 250);
+        //model.createPlayer(100, 250);
+        charaSet();
     }
     //viewで毎フレーム呼ばれる
     public void update(Dimension size){
@@ -109,6 +112,7 @@ public class Field {
                             model.goal = true;
                         }
                     }
+                    
                     return true;
                 }
                 
@@ -149,6 +153,17 @@ public class Field {
         }
         
     }
+
+    private void charaSet(){
+        for(int i=0;i<ROW;i++){
+            for(int j=0;j<COL;j++){
+                if(map[i][j]==0){
+                    model.createPlayer((int)getBlockX(i, j), (int)getBlockY(i, j));
+                }
+            }
+        }
+    }
+    
     //以下get,set関数
     public int getRow(){return ROW;}
     public int getCol(){return COL;}

@@ -25,6 +25,7 @@ public class Player extends Character{
         }
     }
     //描画処理
+    @Override
     public void draw(Graphics g, int offsetX, int offsetY){
         icon = new ImageIcon(getClass().getResource("pictures/1player.png"));
         image = icon.getImage();
@@ -43,12 +44,15 @@ public class Player extends Character{
         }
 
     }
-
-    public void shoot(){
-        if(isShootBall){
-
+    @Override
+    public void damaged(int i){
+        if(damageCount==0){
+            hp -= i;
+            damageCount = 200;
+            System.out.println("damage!"+hp);
         }
     }
+
     // public void damaged(){
     //     if(mutekiTime==0){
     //         mutekiTime = 100;

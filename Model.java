@@ -19,7 +19,7 @@ public class Model extends Observable{
     public void init(){
         chara = new ArrayList<Character>();
         //balls = new ArrayList<Ball>();
-        player = null;
+        //player = null;
         field = new Field(this);
         pressedKeyRight= false;
         pressedKeyLeft = false;
@@ -32,6 +32,7 @@ public class Model extends Observable{
         chara.add(player);
         //e1 = new Enemy1(200, 50);
         chara.add(new Enemy1(200, 50));
+        chara.add(new Boss(250, 100));
         //setChanged();
         //notifyObservers();
     }

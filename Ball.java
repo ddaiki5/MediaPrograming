@@ -27,11 +27,14 @@ public class Ball extends Character{
                 hp = 0;
             }
         }
+        if(isCollisionX){
+            hp = 0;
+        }
     }
 
     @Override
     public void draw(Graphics g, int offsetX, int offsetY){
-        System.out.println("ok");
+        //System.out.println("ok");
         g.setColor(Color.RED);
         g.fillOval((int)x+offsetX+width/4, (int)y+offsetY+width/4, width/2, height/2);
     }

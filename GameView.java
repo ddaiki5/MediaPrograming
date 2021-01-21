@@ -28,7 +28,7 @@ public class GameView extends JPanel implements Observer, ActionListener{
     field = model.field;
     this.sceneManager = sceneManager; 
     model.addObserver(this);
-    System.out.println("a");
+    //System.out.println("a");
     size= getSize();
   }
   //描画update処理
