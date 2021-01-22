@@ -11,7 +11,8 @@ public class Model extends Observable{
     private boolean pressedKeyRight, pressedKeyLeft;
     private SceneManager sceneManager;
     public boolean goal,gameOver;
-    //Enemy1 e1;
+    private int score;
+    
     public Model(){
         init();
     }
@@ -25,6 +26,7 @@ public class Model extends Observable{
         pressedKeyLeft = false;
         goal = false;
         gameOver = false;
+        score = 0;
     }
     
     public void createPlayer(int x, int y){//Player作成用
@@ -53,7 +55,14 @@ public class Model extends Observable{
         }
         //落下と移動処理
         for(int i=0;i<chara.size();i++){
-            chara.get(i).update(field);
+            if(i==0){//player
+                chara.get(i).update(field);
+            }else{//player以外のupdateはplayerに一定の距離近づいてから
+                if(Math.sqrt(Math.pow(player.getX()-chara.get(i).getX(),2)+Math.pow(player.getY()-chara.get(i).getY(),2))<375){
+                    chara.get(i).update(field);
+                }
+            }
+            
             ballEndCheck(chara.get(i));
         }
         
@@ -163,6 +172,10 @@ public class Model extends Observable{
     }
     public Character getCharactor(int idx){
         return chara.get(idx);
+    }
+
+    public int getScore(){
+        return score;
     }
 
     // public void collisionCheack(Character c){

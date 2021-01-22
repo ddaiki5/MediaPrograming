@@ -159,6 +159,8 @@ public class Field {
             for(int j=0;j<COL;j++){
                 if(map[i][j]==0){
                     model.createPlayer((int)getBlockX(i, j), (int)getBlockY(i, j));
+                }else if(map[i][j]==-2){
+                    model.setCharacter(new Enemy1((int)getBlockX(i, j), (int)getBlockY(i, j)));
                 }
             }
         }
