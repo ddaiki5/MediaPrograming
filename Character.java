@@ -7,7 +7,7 @@ public class Character {
     protected int width, height, hp, LimitY, mutekiTime,characterNum;//characterNum:種類判別用のナンバー
     protected float x, y, vx, vy, g;
     protected Image image;
-    protected boolean isGround, isCollisionX, isCollisionY, isDamaged;
+    protected boolean isGround, isCollisionX, isCollisionY, isDamaged,attackFlag;
     //animation用の向き
     protected static final int RIGHT = 0;
     protected static final int LEFT = 1;
@@ -35,6 +35,7 @@ public class Character {
         isDamaged = false;
         damageCount = 0;
         this.characterNum = characterNum;
+        attackFlag = false;
     }
     
     
@@ -131,6 +132,9 @@ public class Character {
                         }else if(vy<0){
                             y = field.getBlockY(i, j)+field.getCs();
                             vy = 0;
+                            if(field.getNum(i,j)==194){
+                                field.setNum(i,j,-1);
+                            }
                         }
                         //f=true;
                         return;
@@ -177,6 +181,12 @@ public class Character {
     }
     public int getCharacterNum(){
         return characterNum;
+    }
+    public boolean getAttackFlag(){
+        return attackFlag;
+    }
+    public void attacked(){
+        attackFlag = false;
     }
 
     //今使ってないやつ

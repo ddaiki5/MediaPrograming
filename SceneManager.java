@@ -9,7 +9,7 @@ public class SceneManager {
     private CharaController c;
     private View view;
     SceneManager(){
-        model = new Model();
+        model = new Model(0);
         c = new CharaController(model);
         sceneNum = 0;
         view = new View();
@@ -24,7 +24,11 @@ public class SceneManager {
                 view.change(new TitleView1(this));
                 break;
             case 1:
-                model.init();
+                model.init(0);
+                view.change(new GameView(model, c, this));
+                break;
+            case 2:
+                model.init(1);
                 view.change(new GameView(model, c, this));
                 break;
         }

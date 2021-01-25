@@ -39,4 +39,5 @@ public class Ball extends Character{
         g.fillOval((int)x+offsetX+width/4, (int)y+offsetY+width/4, width/2, height/2);
     }
 
+
 }

@@ -48,13 +48,21 @@ public class GameView extends JPanel implements Observer, ActionListener{
       model.update();
       field.update(size);
       this.repaint();
-      if(model.goal || model.gameOver){
+      if(model.gameOver){
         model.goal = false;
         model.gameOver = false;
         timer.stop();
         System.out.println("goal");
         //this.setFocusable(false);
         sceneManager.setSceneNum(0);
+        sceneManager.changeScene();
+      }else if(model.goal){
+        model.goal = false;
+        model.gameOver = false;
+        timer.stop();
+        System.out.println("goal");
+        //this.setFocusable(false);
+        sceneManager.setSceneNum(2);
         sceneManager.changeScene();
       }
       //System.out.println("t");

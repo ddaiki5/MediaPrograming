@@ -29,16 +29,20 @@ public class Field {
     private boolean is83;
     public int WIDTH,HEIGHT;
     private ImageIcon icon;
-    private Image i13,i40,i117,i194;
+    private Image i13,i40,i117,i194,i195;
     private int IMAGESIZE = 18;
     private int offsetX,offsetY;
     private Model model;
-    public Field(Model model){
-        init(model);
+    public Field(Model model,int i){
+        init(model, i);
     }
     //初期化用
-    public void init(Model model){
-        loadField("map1.csv");
+    public void init(Model model, int i){
+        if(i==0){
+            loadField("map1.csv");
+        }else if(i==1){
+            loadField("map3.csv");
+        }
         icon = new ImageIcon(getClass().getResource("map/13.png"));
         i13 = icon.getImage();
         icon = new ImageIcon(getClass().getResource("map/40.png"));
@@ -47,6 +51,8 @@ public class Field {
         i194 = icon.getImage();
         icon = new ImageIcon(getClass().getResource("map/117.png"));
         i117 = icon.getImage();
+        icon = new ImageIcon(getClass().getResource("map/195.png"));
+        i195 = icon.getImage();
         offsetX = 0;
         offsetY = 0;
         is83 = false;
@@ -95,6 +101,12 @@ public class Field {
                     case 194:
                         g.drawImage(i194, j*(int)cs+offsetX, i*(int)cs+offsetY, j*(int)cs+offsetX+(int)cs, i*(int)cs+offsetY+(int)cs,0, 0, IMAGESIZE,IMAGESIZE, null);
                         break;
+                    case 195:
+                        g.drawImage(i195, j*(int)cs+offsetX, i*(int)cs+offsetY, j*(int)cs+offsetX+(int)cs, i*(int)cs+offsetY+(int)cs,0, 0, IMAGESIZE,IMAGESIZE, null);
+                        break;
+                    case 90:
+                        g.drawImage(i117, j*(int)cs+offsetX, i*(int)cs+offsetY, j*(int)cs+offsetX+(int)cs, i*(int)cs+offsetY+(int)cs,0, 0, IMAGESIZE,IMAGESIZE, null);
+                        break;
                     
                 }
             }
@@ -110,6 +122,12 @@ public class Field {
                     if(map[i][j]==117){
                         if(c.getCharacterNum()==0){
                             model.goal = true;
+                        }
+                    }
+                    if(map[i][j]==90){
+                        if(c.getCharacterNum()==0){
+                            model.goal = true;
+                            return false;
                         }
                     }
                     
@@ -161,6 +179,8 @@ public class Field {
                     model.createPlayer((int)getBlockX(i, j), (int)getBlockY(i, j));
                 }else if(map[i][j]==-2){
                     model.setCharacter(new Enemy1((int)getBlockX(i, j), (int)getBlockY(i, j)));
+                }else if(map[i][j]==-9){
+                    model.setCharacter(new Boss((int)getBlockX(i, j), (int)getBlockY(i, j)));
                 }
             }
         }

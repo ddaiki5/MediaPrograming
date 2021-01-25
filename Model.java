@@ -13,15 +13,15 @@ public class Model extends Observable{
     public boolean goal,gameOver;
     private int score;
     
-    public Model(){
-        init();
+    public Model(int i){
+        init(i);
     }
     //初期化用
-    public void init(){
+    public void init(int i){
         chara = new ArrayList<Character>();
         //balls = new ArrayList<Ball>();
         //player = null;
-        field = new Field(this);
+        field = new Field(this, i);
         pressedKeyRight= false;
         pressedKeyLeft = false;
         goal = false;
@@ -32,15 +32,11 @@ public class Model extends Observable{
     public void createPlayer(int x, int y){//Player作成用
         player = new Player(x, y);
         chara.add(player);
-        //e1 = new Enemy1(200, 50);
-        chara.add(new Enemy1(200, 50));
-        chara.add(new Boss(250, 100));
         //setChanged();
         //notifyObservers();
     }
     //viewで毎フレーム更新
     public void update(){
-        //System.out.println(player==null);
         //Controllerの入力に対する移動
         if(pressedKeyRight){
             player.moveX(1);
@@ -58,12 +54,14 @@ public class Model extends Observable{
             if(i==0){//player
                 chara.get(i).update(field);
             }else{//player以外のupdateはplayerに一定の距離近づいてから
-                if(Math.sqrt(Math.pow(player.getX()-chara.get(i).getX(),2)+Math.pow(player.getY()-chara.get(i).getY(),2))<375){
+                if(Math.sqrt(Math.pow(player.getX()-chara.get(i).getX(),2)+Math.pow(player.getY()-chara.get(i).getY(),2))<500){
                     chara.get(i).update(field);
                 }
             }
-            
-            ballEndCheck(chara.get(i));
+            //attackFlagのチェック
+            enemyAttackFlagCheck(chara.get(i));
+            //hpが0以下でリストから外す
+            endCheck(chara.get(i));
         }
         
         //character同市のあたり判定
@@ -94,29 +92,46 @@ public class Model extends Observable{
     public void jump(){
         if(player!=null){
             player.jump();
-            shoot();
+            //shoot();
         }
     }
-    //ball攻撃
+    //ball攻撃 controllerで呼び出し
     public void shoot(){
         Ball ball;
         if(player.dir==0){
-            ball = new Ball((int)player.getX()+player.getWidth()+6, (int)player.getY()+player.getHeight()/2);
+            ball = new Ball((int)player.getX()+player.getWidth()+6, (int)player.getY()+player.getHeight()/4);
             ball.dir = 0;
         }else{
-            ball = new Ball((int)player.getX()-6, (int)player.getY()+player.getHeight()/2);
+            ball = new Ball((int)player.getX()-10, (int)player.getY());
             ball.vx = -1.5f;
             ball.dir = 1;
         }
         chara.add(ball);
     }
+
+    public void enemyAttackFlagCheck(Character c){
+        //Boss
+        if(c.getCharacterNum()==10){
+            if(c.getAttackFlag()){
+                BossFire fire = new BossFire((int)c.getX()-6, (int)c.getY());
+                c.attacked();
+                chara.add(fire);
+            }
+        }
+    }
     //ballを消す
-    public void ballEndCheck(Character c){
-        if(c.getCharacterNum()==99){
+    public void endCheck(Character c){
+        if(c.getCharacterNum()==99 || c.getCharacterNum()==98){
             if(c.hp<=0){
                 chara.remove(chara.indexOf(c));
             }
+        }else if(c.getCharacterNum()==10){
+            if(c.hp<=0){
+                chara.remove(chara.indexOf(c));
+                gameOver = true;
+            }
         }
+        
     }
     //キャラ同市のあたり判定
     public void collisionCheack(Character c1, Character c2){
@@ -144,6 +159,12 @@ public class Model extends Observable{
                 }else if(c1.getCharacterNum()==99 || c2.getCharacterNum()==99){
                     c1.damaged(1);
                     c2.damaged(1);
+                }else if((c1.getCharacterNum()==98 || c2.getCharacterNum()==99) ||(c1.getCharacterNum()==99 || c2.getCharacterNum()==98)){
+                    if(c1.getCharacterNum()==99){
+                        c1.damaged(1);
+                    }else if(c2.getCharacterNum()==99){
+                        c2.damaged(1);
+                    }
                 }
             }
         }

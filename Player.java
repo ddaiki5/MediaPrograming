@@ -30,6 +30,9 @@ public class Player extends Character{
         icon = new ImageIcon(getClass().getResource("pictures/1player.png"));
         image = icon.getImage();
         //g.drawRect((int)x +offsetX, (int)y+offsetY, width, height);
+        if(damageCount%50>25){
+            return;
+        }
         g.drawImage(image, (int)x +offsetX, (int)y+offsetY, (int)x +offsetX+(int)width+3, (int)y+offsetY+(int)height+3,IMAGESIZE+animationCount*(int)width+dir*IMAGESIZE*2+2, 0, IMAGESIZE+animationCount*(int)width+(int)width+dir*IMAGESIZE*2-2,IMAGESIZE, null);
         if(Math.abs(vx)>0.1f){
             count++;

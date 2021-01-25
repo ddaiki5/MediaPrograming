@@ -30,6 +30,9 @@ public class CharaController implements MouseListener,MouseMotionListener,KeyLis
         case KeyEvent.VK_A:
             model.move(-1, false);
             break;
+        case KeyEvent.VK_S:
+            model.shoot();
+            break;
         case KeyEvent.VK_SPACE:
             System.out.println("jump!");
             model.jump();
