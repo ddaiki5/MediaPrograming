@@ -4,13 +4,13 @@ import java.awt.event.*;
 import java.util.*;
 
 public class Model extends Observable{
-    protected ArrayList<Character> chara,balls;
+    protected ArrayList<Character> chara;
     protected Player player;
     protected boolean canMove, canJump;//使われていない
     protected Field field;
     private boolean pressedKeyRight, pressedKeyLeft;
     private SceneManager sceneManager;
-    public boolean goal,gameOver;
+    public boolean goal,gameOver, bossFlag;
     private int score;
     
     public Model(int i){
@@ -26,7 +26,10 @@ public class Model extends Observable{
         pressedKeyLeft = false;
         goal = false;
         gameOver = false;
-        score = 0;
+        bossFlag = false;
+        if(i==0){
+            score = 0;
+        }
     }
     
     public void createPlayer(int x, int y){//Player作成用
@@ -136,11 +139,19 @@ public class Model extends Observable{
         if(c.getCharacterNum()==99 || c.getCharacterNum()==98 || c.getCharacterNum()==1 || c.getCharacterNum()==2 ){
             if(c.hp<=0){
                 chara.remove(chara.indexOf(c));
+                score += 100;
             }
         }else if(c.getCharacterNum()==10){
             if(c.hp<=0){
                 chara.remove(chara.indexOf(c));
-                gameOver = true;
+                score += 10000;
+                bossFlag = true;
+            }
+        }else if(c.getCharacterNum()==6){
+            if(c.hp<=0){
+                chara.remove(chara.indexOf(c));
+                score += 300;
+                System.out.println("coin");
             }
         }
         
@@ -153,6 +164,10 @@ public class Model extends Observable{
                 if(c1.getCharacterNum()==0){//playerとenemyのあたり判定
                     if(c1.getDamageCount()==0){//無敵でないなら
                         if(c2.getCharacterNum()==99){//ballとの判定はない
+                            return;
+                        }
+                        if(c2.getCharacterNum()==6){//coinとの判定
+                            c2.damaged(1);
                             return;
                         }
                         if(c1.pY+c1.getHeight()<c2.getY()){//上から
@@ -168,6 +183,9 @@ public class Model extends Observable{
                         //     c1.damaged(1);
                         // }
                     }
+                }else if(c1.getCharacterNum()==6 || c2.getCharacterNum()==6){
+                    //return;
+                
                 }else if(c1.getCharacterNum()==99 || c2.getCharacterNum()==99){
                     c1.damaged(1);
                     c2.damaged(1);

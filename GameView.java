@@ -34,10 +34,10 @@ public class GameView extends JPanel implements Observer, ActionListener{
   //描画update処理
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
+    field.draw(g);
     for(Character f:model.getCharactors()){
       f.draw(g, field.getOffsetX(), field.getOffsetY());
     }
-    field.draw(g);
   }
   public void update(Observable o,Object arg){
     repaint();

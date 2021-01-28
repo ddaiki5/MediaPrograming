@@ -30,8 +30,8 @@ public class Field {
     public int WIDTH,HEIGHT;
     private ImageIcon icon;
     private Image i13,i40,i117,i194,i195;
-    private int IMAGESIZE = 18;
-    private int offsetX,offsetY;
+    private int IMAGESIZE = 18,bi,bj;
+    private int offsetX,offsetY, count;
     private Model model;
     public Field(Model model,int i){
         init(model, i);
@@ -57,6 +57,9 @@ public class Field {
         offsetY = 0;
         is83 = false;
         this.model = model;
+        count = 0;
+        bi=29;
+        bj=37;
         //goal = false;
         //model.createPlayer(100, 250);
         charaSet();
@@ -64,6 +67,7 @@ public class Field {
     //viewで毎フレーム呼ばれる
     public void update(Dimension size){
         updateOffset(size);
+        bossFinish();
     }
     //offsetのアップデート
     private void updateOffset(Dimension size){
@@ -126,7 +130,7 @@ public class Field {
                     }
                     if(map[i][j]==90){
                         if(c.getCharacterNum()==0){
-                            model.goal = true;
+                            model.bossFlag = true;
                             return false;
                         }
                     }
@@ -185,8 +189,24 @@ public class Field {
                     model.setCharacter(new Enemy3((int)getBlockX(i, j), (int)getBlockY(i, j)));
                 }else if(map[i][j]==-4){
                     model.setCharacter(new Enemy4((int)getBlockX(i, j), (int)getBlockY(i, j)));
+                }else if(map[i][j]==-6){
+                    model.setCharacter(new Coin((int)getBlockX(i, j), (int)getBlockY(i, j)));
                 }
             }
+        }
+    }
+
+    private void bossFinish(){
+        if(model.bossFlag){
+            count++;
+            if(count%10==0){
+                map[bi][bj] = -1;
+                bj--;
+            }
+            
+        }
+        if(count>300){
+            model.goal = true;
         }
     }
     
