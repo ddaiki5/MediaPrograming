@@ -31,7 +31,7 @@ public class Model extends Observable{
     
     public void createPlayer(int x, int y){//Player作成用
         player = new Player(x, y);
-        chara.add(player);
+        chara.add(0,player);
         //setChanged();
         //notifyObservers();
     }
@@ -118,10 +118,22 @@ public class Model extends Observable{
                 chara.add(fire);
             }
         }
+
+        //(1/28追加)
+        //Enemy4
+        if(c.getCharacterNum()==2){
+            if(c.getAttackFlag()){
+                EnemyBall eball = new EnemyBall((int)c.getX(), (int)c.getY());
+                if(player.getX() > c.getX()){eball.EBdir(0);}
+                else{eball.EBdir(1);}
+                c.attacked();
+                chara.add(eball);
+            }
+        }
     }
     //ballを消す
     public void endCheck(Character c){
-        if(c.getCharacterNum()==99 || c.getCharacterNum()==98){
+        if(c.getCharacterNum()==99 || c.getCharacterNum()==98 || c.getCharacterNum()==1 || c.getCharacterNum()==2 ){
             if(c.hp<=0){
                 chara.remove(chara.indexOf(c));
             }
@@ -165,6 +177,10 @@ public class Model extends Observable{
                     }else if(c2.getCharacterNum()==99){
                         c2.damaged(1);
                     }
+                }else if((c1.getCharacterNum()==99 && c2.getCharacterNum()==97) || (c1.getCharacterNum()==97 && c2.getCharacterNum()==99) ){
+                    //(1/28)EnemyBall用のNum97を追加
+                    c1.damaged(1);
+                    c2.damaged(1);
                 }
             }
         }

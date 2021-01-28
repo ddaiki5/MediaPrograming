@@ -7,13 +7,13 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
-public class TitleView1 extends JPanel  implements KeyListener{
+public class GameOverView extends JPanel  implements KeyListener{
     
     
 //View view;
     SceneManager sceneManager;
     //TitleController c;
-    TitleView1(SceneManager sceneManager){
+    GameOverView(SceneManager sceneManager){
         this.sceneManager = sceneManager;
         //c = new TitleController(this);
         
@@ -26,18 +26,7 @@ public class TitleView1 extends JPanel  implements KeyListener{
                  }catch(InterruptedException e){
                     e.printStackTrace();
                  }
-                 if(down){
-                   y+=4;
-                 }
-                 if(up){
-                  y-=4;
-                 }
-                 if(left){
-                  x-=4;
-                 }
-                 if(right){
-                  x+=4;
-                 }
+                 
                  repaint();
                 }
             }
@@ -50,28 +39,23 @@ public class TitleView1 extends JPanel  implements KeyListener{
         //this.requestFocusInWindow();
     }
     
-    int x;
-    int y;
+    
     public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0,500,700);
-        Font font = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,70);
+        Font font = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,100);
         g.setFont(font);
 		g.setColor(
             new Color(
-        (int)(Math.random() * 256), 
-        (int)(Math.random() * 256), 
-        (int)(Math.random() * 256))); 
-        g.drawString("横スクロール", 30, 100);
-        Font font2 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,70);
+        (int)(Math.random() * 256), 0, 0)); 
+        g.drawString("GAME", 30, 130);
+        Font font2 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,100);
         g.setFont(font2);
 		g.setColor(
             new Color(
-                (int)(Math.random() * 256), 
-                (int)(Math.random() * 256), 
-                (int)(Math.random() * 256))); 
-        g.drawString("アクション", 150, 170);
+        (int)(Math.random() * 256), 0, 0)); 
+        g.drawString("OVER", 180, 230);
         Font font3 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,20);
         g.setFont(font3);
 		g.setColor(
@@ -79,26 +63,20 @@ public class TitleView1 extends JPanel  implements KeyListener{
                 (int)(Math.random() * 256), 
                 (int)(Math.random() * 256), 
                 (int)(Math.random() * 256))); 
-        g.drawString("SPACEを押してスタート", 150, 350);  
+        g.drawString("SPACEを押してタイトルへ", 130, 350);  
         //timer = new javax.swing.Timer(10, this);
         //g.fillRect(x,y,50,50);  
-        Image hart;
-        hart = Toolkit.getDefaultToolkit().getImage("pictures/hart.png");  
         
-        g.drawImage(hart,x,y,this);
     }
     public void changeScene(){
         //this.setFocusable(false);
-        sceneManager.setSceneNum(3);
+        sceneManager.setSceneNum(0);
         sceneManager.changeScene();
     }
     public void keyTyped(KeyEvent e){
         System.out.println("a");
     }
-    boolean up;
-    boolean down;
-    boolean right;
-    boolean left;
+    
     
     public void keyReleased(KeyEvent e){
         System.out.println("a");
@@ -112,18 +90,7 @@ public class TitleView1 extends JPanel  implements KeyListener{
             changeScene();
             System.out.println("space");
             break;
-        case 37:
-            left = false;
-            break;
-        case 38:
-            up = false;
-            break;
-        case 39:
-            right = false;
-            break;
-        case 40:
-            down = false;
-            break;
+        
         }
     }
     public void keyPressed(KeyEvent e){
@@ -132,18 +99,7 @@ public class TitleView1 extends JPanel  implements KeyListener{
             break;
         case KeyEvent.VK_A:
             break;
-            case 37:
-            left = true;
-            break;
-           case 38:
-            up = true;
-            break;
-           case 39:
-            right = true;
-            break;
-           case 40:
-            down = true;
-            break;
+            
         }
     }
 }

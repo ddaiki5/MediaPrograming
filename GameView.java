@@ -14,7 +14,7 @@ public class GameView extends JPanel implements Observer, ActionListener{
     // model = new Model();
     // c = new CharaController(model);
     model = m;
-    this.setBackground(Color.white);
+    this.setBackground(Color.DARK_GRAY);
     //this.requestFocusInWindow();
     setFocusable(true);
     this.addMouseListener(c);
@@ -54,7 +54,7 @@ public class GameView extends JPanel implements Observer, ActionListener{
         timer.stop();
         System.out.println("goal");
         //this.setFocusable(false);
-        sceneManager.setSceneNum(0);
+        sceneManager.setSceneNum(4);
         sceneManager.changeScene();
       }else if(model.goal){
         model.goal = false;
@@ -62,7 +62,12 @@ public class GameView extends JPanel implements Observer, ActionListener{
         timer.stop();
         System.out.println("goal");
         //this.setFocusable(false);
-        sceneManager.setSceneNum(2);
+        if(sceneManager.getSceneNum()==1){
+          sceneManager.setSceneNum(2);
+        }else if(sceneManager.getSceneNum()==2){
+          sceneManager.setSceneNum(0);
+        }
+        
         sceneManager.changeScene();
       }
       //System.out.println("t");

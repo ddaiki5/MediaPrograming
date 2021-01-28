@@ -18,6 +18,9 @@ public class SceneManager {
     public void setSceneNum(int n){
         sceneNum = n;
     }
+    public int getSceneNum(){
+        return sceneNum;
+    }
     public void changeScene(){
         switch(sceneNum){
             case 0:
@@ -30,6 +33,12 @@ public class SceneManager {
             case 2:
                 model.init(1);
                 view.change(new GameView(model, c, this));
+                break;
+            case 3:
+                view.change(new TitleView(this));
+                break;
+            case 4:
+                view.change(new GameOverView(this));
                 break;
         }
     }

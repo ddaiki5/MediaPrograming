@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.awt.Font;
 public class TitleView extends JPanel implements KeyListener{
     //View view;
     SceneManager sceneManager;
@@ -15,10 +16,29 @@ public class TitleView extends JPanel implements KeyListener{
     }
     public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(Color.WHITE);
-		g.fillRect(0,0,400,300);
 		g.setColor(Color.BLACK);
-        g.drawString("TITLE", 170, 50);
+		g.fillRect(0,0,500,700);
+        Font font = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,30);
+        g.setFont(font);
+        g.setColor(Color.WHITE);
+        g.drawString("Dキーで進む", 50, 100);
+        Font font2 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,30);
+        g.setFont(font2);
+        g.setColor(Color.WHITE);
+        g.drawString("Aキーで戻る", 50, 130);
+        Font font3 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,30);
+        g.setFont(font3);
+        g.setColor(Color.WHITE);
+        g.drawString("SPACEでジャンプ・攻撃", 50, 160);
+        Font font4 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,30);
+        g.setFont(font4);
+        g.setColor(Color.WHITE);
+        g.drawString("敵を倒してゴールを目指せ！", 50, 190);
+        Font font5 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,30);
+        g.setFont(font5);
+        g.setColor(Color.WHITE);
+        g.drawString("SPACEで次へ", 150, 350);
+        
         //timer = new javax.swing.Timer(10, this);
     }
     public void changeScene(){

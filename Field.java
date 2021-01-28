@@ -181,6 +181,10 @@ public class Field {
                     model.setCharacter(new Enemy1((int)getBlockX(i, j), (int)getBlockY(i, j)));
                 }else if(map[i][j]==-9){
                     model.setCharacter(new Boss((int)getBlockX(i, j), (int)getBlockY(i, j)));
+                }else if(map[i][j]==-3){
+                    model.setCharacter(new Enemy3((int)getBlockX(i, j), (int)getBlockY(i, j)));
+                }else if(map[i][j]==-4){
+                    model.setCharacter(new Enemy4((int)getBlockX(i, j), (int)getBlockY(i, j)));
                 }
             }
         }
