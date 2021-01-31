@@ -3,30 +3,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 /*弾飛ばす敵*/
-
-//↓なかったことに。
-/*Model.java内に 以下の追加で動作   
-　protected Enemy3 enemy3;
-
-  public void createEnemy3(int x, int y){
-    enemy3 = new Enemy3(x, y);
-    chara.add(enemy3);
-    //setChanged();
-    //notifyObservers();
-  }
-
-  ・public void update(){の中に以下を追加
-    enemy3.update(enemy3);
-
-  ///////////
-  DrawFrame.javaのpublic DrawFrame(){　の中に以下を追加
-    model.createEnemy3(750, 300);
-*/
-
 //CharacterNumは2
 public class Enemy4 extends Character{
-    protected int wayx = 0;
     protected int end = 0, through = 0;
+    private ImageIcon icon1, icon2;
     protected int cooltime = 0;    //攻撃までのクールタイム(この敵のジャンプもクールタイムで管理)
     public Enemy4(int x, int y){
         super(x, y, 32, 32, 2, 2);
@@ -34,7 +14,6 @@ public class Enemy4 extends Character{
         this.dir = 1;
         this.attackFlag = false;
     }
-
     public void jum(){
         //System.out.println(isGround);
         if(isGround){
@@ -43,15 +22,8 @@ public class Enemy4 extends Character{
             isGround = false;
         }
     }
-
     public void update(Field field){
         super.update(field);
-        if(isCollisionX){
-          wayx = -wayx;
-          isCollisionX = false;
-        }
-        moveX(wayx);
-
         if(isGround == true && cooltime == 300){
           this.jum();
         }
@@ -69,49 +41,21 @@ public class Enemy4 extends Character{
             this.y = -100;
         }
     }
-
-    /*
-    public void enemyshoot(Character chara){
-        EnemyBall eball;
-        if(this.dir==0){
-            eball = new EnemyBall((int)this.getX()+this.getWidth()+30, (int)this.getY()+this.getHeight()/2);
-            eball.dir = 0;
-        }else{
-            eball = new EnemyBall((int)this.getX()-30, (int)this.getY()+this.getHeight()/2);
-            eball.vx = -1.5f;
-            eball.dir = 1;
-        }
-        chara.add(eball);
-    }*/
-
-
-
-
-
-    /*
-    public int get_cooltime(){ //クールタイムを返す
-        return this.cooltime;
-    }
-
-
-    public void EBdir(int d){ //dirを変える
+    public void dir(int d){ //dirを変える
         if(this.dir != d)
           this.dir = d;
     }
-
-    public void resetcooltime(){ //クールタイムを0にする
-        this.cooltime = 0;
-    }
-    */
-
-
-
+    //描画処理
     public void draw(Graphics g, int offsetX, int offsetY){
         //System.out.println((int)x +offsetX);
-        if(this.end != 1){
-            if(this.through == 1){this.end = 1;}
-            g.setColor(Color.ORANGE);
-            g.fillRect((int)x +offsetX, (int)y+offsetY, width, height);
+        icon1 = new ImageIcon(getClass().getResource("pictures/enemy4-1.png"));
+        icon2 = new ImageIcon(getClass().getResource("pictures/enemy4-2.png"));
+        if(dir == 1){
+          image = icon1.getImage();
         }
+        else{
+          image = icon2.getImage();
+        }
+        g.drawImage(image, (int)x +offsetX, (int)y+offsetY-10, gw+10, gh+10,null);
     }
 }

@@ -41,7 +41,7 @@ public class Boss extends Character{
         }else if(animationCount<60){
             g.drawImage(move5, (int)x +offsetX-60, (int)y+offsetY-85, gw+34, gh,null);
         }
-        if(Math.abs(vx)>=0.5f){
+        if(Math.abs(vx)>=0.1f){
             animationCount++;
         }
         if(animationCount>=60){
@@ -56,16 +56,16 @@ public class Boss extends Character{
 
     private void bossMove(){
         if(moveCounter%800==799){
-            vy += -7;
+            vy += -5;
         }
         if(moveCounter%2000<500){
-            vx = -1;
+            vx = -0.3f;
         }else if(moveCounter%2000>=1000&&moveCounter<1500){
-            vx = 1;
+            vx = 0.3f;
         }else{
             vx = 0;
         }
-        if(moveCounter%1000==600 || moveCounter%1000==650 || moveCounter%1000==700 ||moveCounter%1000==700 ||moveCounter%1000==750){
+        if(moveCounter%500==100 || moveCounter%500==150 || moveCounter%500==200 ||moveCounter%500==250 ||moveCounter%500==300){
             attackFlag = true;
         }
         moveCounter++;

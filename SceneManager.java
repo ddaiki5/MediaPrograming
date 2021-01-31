@@ -7,12 +7,12 @@ public class SceneManager {
     private Scene scene;
     private Model model;
     private CharaController c;
-    private View view;
+    private MainFrame view;
     SceneManager(){
         model = new Model(0);
         c = new CharaController(model);
         sceneNum = 0;
-        view = new View();
+        view = new MainFrame();
         view.setVisible(true);
     }
     public void setSceneNum(int n){
@@ -38,8 +38,10 @@ public class SceneManager {
                 view.change(new TitleView(this));
                 break;
             case 4:
-                view.change(new GameOverView(this));
+                view.change(new GameOverView(this, model));
                 break;
+            case 5:
+                view.change(new GameClearView(this, model));
         }
     }
 }

@@ -7,14 +7,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
-public class GameOverView extends JPanel  implements KeyListener{
+public class GameClearView extends JPanel  implements KeyListener{
     
     
 //View view;
     SceneManager sceneManager;
     private Model model;
     //TitleController c;
-    GameOverView(SceneManager sceneManager,Model model){
+    GameClearView(SceneManager sceneManager,Model model){
         this.sceneManager = sceneManager;
         this.model = model;
         //c = new TitleController(this);
@@ -51,13 +51,13 @@ public class GameOverView extends JPanel  implements KeyListener{
 		g.setColor(
             new Color(
         (int)(Math.random() * 256), 0, 0)); 
-        g.drawString("GAME", 30, 130);
+        g.drawString("STAGE", 30, 130);
         Font font2 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,100);
         g.setFont(font2);
 		g.setColor(
             new Color(
         (int)(Math.random() * 256), 0, 0)); 
-        g.drawString("OVER", 180, 230);
+        g.drawString("CLEAR!", 120, 230);
         Font font3 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,50);
         g.setFont(font3);
 		g.setColor(Color.BLUE); 

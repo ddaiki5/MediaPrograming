@@ -126,6 +126,7 @@ public class Field {
                     if(map[i][j]==117){
                         if(c.getCharacterNum()==0){
                             model.goal = true;
+                            model.soundPlay("enter");
                         }
                     }
                     if(map[i][j]==90){
@@ -201,12 +202,13 @@ public class Field {
             count++;
             if(count%10==0){
                 map[bi][bj] = -1;
+                model.soundPlay("block");
                 bj--;
             }
             
         }
         if(count>300){
-            model.goal = true;
+            model.stageClear = true;
         }
     }
     

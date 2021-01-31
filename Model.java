@@ -1,17 +1,24 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
+
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.io.File;
+
 
 public class Model extends Observable{
-    protected ArrayList<Character> chara;
-    protected Player player;
-    protected boolean canMove, canJump;//使われていない
-    protected Field field;
+    private ArrayList<Character> chara;
+    public Player player;
+    private boolean canMove, canJump;//使われていない
+    public Field field;
     private boolean pressedKeyRight, pressedKeyLeft;
     private SceneManager sceneManager;
-    public boolean goal,gameOver, bossFlag;
+    public boolean goal,gameOver, bossFlag, stageClear;
     private int score;
+    private SoundManager soundManager;
+    private static final String[] soundNames = {"coin","jump","block","enter","shoot","stomp"};
     
     public Model(int i){
         init(i);
@@ -19,22 +26,26 @@ public class Model extends Observable{
     //初期化用
     public void init(int i){
         chara = new ArrayList<Character>();
-        //balls = new ArrayList<Ball>();
-        //player = null;
         field = new Field(this, i);
+        soundManager = new SoundManager();
         pressedKeyRight= false;
         pressedKeyLeft = false;
         goal = false;
         gameOver = false;
         bossFlag = false;
+        stageClear = false;
         if(i==0){
             score = 0;
+            
         }
+        
+        loadSound();
     }
     
     public void createPlayer(int x, int y){//Player作成用
         player = new Player(x, y);
-        chara.add(0,player);
+        player.setSoundManager(soundManager);
+        chara.add(0,player);//playerは０番目
         //setChanged();
         //notifyObservers();
     }
@@ -98,9 +109,10 @@ public class Model extends Observable{
             //shoot();
         }
     }
-    //ball攻撃 controllerで呼び出し
+    //player ball攻撃 controllerで呼び出し
     public void shoot(){
         Ball ball;
+        soundManager.play("shoot");
         if(player.dir==0){
             ball = new Ball((int)player.getX()+player.getWidth()+6, (int)player.getY()+player.getHeight()/4);
             ball.dir = 0;
@@ -112,7 +124,7 @@ public class Model extends Observable{
         chara.add(ball);
     }
 
-    public void enemyAttackFlagCheck(Character c){
+    private void enemyAttackFlagCheck(Character c){
         //Boss
         if(c.getCharacterNum()==10){
             if(c.getAttackFlag()){
@@ -127,19 +139,29 @@ public class Model extends Observable{
         if(c.getCharacterNum()==2){
             if(c.getAttackFlag()){
                 EnemyBall eball = new EnemyBall((int)c.getX(), (int)c.getY());
-                if(player.getX() > c.getX()){eball.EBdir(0);}
-                else{eball.EBdir(1);}
+                if(player.getX() > c.getX()){
+                    c.dir = 0;
+                    eball.EBdir(0);
+                }
+                else{
+                    c.dir = 1;
+                    eball.EBdir(1);
+                }
                 c.attacked();
                 chara.add(eball);
             }
         }
     }
     //ballを消す
-    public void endCheck(Character c){
-        if(c.getCharacterNum()==99 || c.getCharacterNum()==98 || c.getCharacterNum()==1 || c.getCharacterNum()==2 ){
+    private void endCheck(Character c){
+        if(c.getCharacterNum()==98 || c.getCharacterNum()==1 || c.getCharacterNum()==2 ){
             if(c.hp<=0){
                 chara.remove(chara.indexOf(c));
                 score += 100;
+            }
+        }else if(c.getCharacterNum()==97 || c.getCharacterNum()==99){
+            if(c.hp<=0){
+                chara.remove(chara.indexOf(c));
             }
         }else if(c.getCharacterNum()==10){
             if(c.hp<=0){
@@ -150,14 +172,14 @@ public class Model extends Observable{
         }else if(c.getCharacterNum()==6){
             if(c.hp<=0){
                 chara.remove(chara.indexOf(c));
-                score += 300;
+                score += 200;
                 System.out.println("coin");
             }
         }
         
     }
     //キャラ同市のあたり判定
-    public void collisionCheack(Character c1, Character c2){
+    private void collisionCheack(Character c1, Character c2){
         //矩形あたり判定
         if(Math.abs(c1.getX()-c2.getX())<(c1.gw+c2.gw)/2){
             if(Math.abs(c1.getY()-c2.getY())<(c1.gh+c2.gh)/2){
@@ -168,10 +190,12 @@ public class Model extends Observable{
                         }
                         if(c2.getCharacterNum()==6){//coinとの判定
                             c2.damaged(1);
+                            soundManager.play("coin");
                             return;
                         }
                         if(c1.pY+c1.getHeight()<c2.getY()){//上から
                             //player.jump();
+                            soundManager.play("stomp");
                             c2.damaged(1);//enemyにダメージ
                             c1.setVy(-3);
                         }else{
@@ -206,7 +230,7 @@ public class Model extends Observable{
     
     
     //playerのhpがゼロになったかをチェックする
-    public void gameOverCheck(){
+    private void gameOverCheck(){
         if(player.getHp()<=0){
             gameOver = true;
         }
@@ -215,14 +239,22 @@ public class Model extends Observable{
         }
         if(player.getY()<0||player.getY()>field.HEIGHT){
             gameOver = true;
-        }
-        
+        }    
     }
+    //音ファイル読み込み
+    private void loadSound(){
+        for(int i=0;i<soundNames.length;i++){
+            soundManager.load(soundNames[i], "sounds/"+soundNames[i] + ".wav");
+        }
+    }
+
+    
     //get.set関数
     public ArrayList<Character> getCharactors(){
         return chara;
     }
     public void setCharacter(Character c){
+        c.setSoundManager(soundManager);
         chara.add(c);
     }
     public Character getCharactor(int idx){
@@ -231,6 +263,14 @@ public class Model extends Observable{
 
     public int getScore(){
         return score;
+    }
+
+    public int getPlayerHp(){
+        return player.getHp();
+    }
+
+    public void soundPlay(String name){
+        soundManager.play(name);
     }
 
     // public void collisionCheack(Character c){

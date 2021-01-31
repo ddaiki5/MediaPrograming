@@ -20,6 +20,7 @@ public class Player extends Character{
         System.out.println(isGround);
         if(isGround){
             vy = -5f;
+            soundManager.play("jump");
             System.out.println(vy);
             isGround = false;
         }

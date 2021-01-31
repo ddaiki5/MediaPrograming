@@ -3,23 +3,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class CharaController implements MouseListener,MouseMotionListener,KeyListener {
+public class CharaController implements KeyListener {
     protected Model model;
     protected int dragStartX,dragStartY;
     public CharaController(Model a) {
       model = a;
     }
-    public void mouseClicked(MouseEvent e) { }
-    public void mousePressed(MouseEvent e) {
-      //System.out.println("c");
-    }
-    public void mouseDragged(MouseEvent e) {
-      
-    }
-    public void mouseReleased(MouseEvent e) { }
-    public void mouseEntered(MouseEvent e) { }
-    public void mouseExited(MouseEvent e) { }
-    public void mouseMoved(MouseEvent e) { }
+  
     public void keyTyped(KeyEvent e){}
     public void keyReleased(KeyEvent e){
       int n = e.getKeyCode();
@@ -49,5 +39,7 @@ public class CharaController implements MouseListener,MouseMotionListener,KeyLis
             break;
         }
     }
+
+
 }
   

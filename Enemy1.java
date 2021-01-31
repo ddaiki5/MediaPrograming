@@ -4,31 +4,10 @@ import java.awt.event.*;
 import java.util.*;
 /*クリボーみたいな敵*/
 
-/*Model.java内に 以下の追加で動作   
-　protected Enemy1 enemy1;
-
-  public void createEnemy1(int x, int y){
-    enemy1 = new Enemy1(x, y);
-    chara.add(enemy1);
-    //setChanged();
-    //notifyObservers();
-  }
-
-  ・public void update(){の中に以下を追加
-    enemy1.update(enemy1);
-
-  ///////////
-  DrawFrame.javaのpublic DrawFrame(){　の中に以下を追加
-    model.createEnemy2(300, 210);
-
-
-*/
-
-
-
 public class Enemy1 extends Character{
     protected int wayx = -1;
     protected int end = 0, through = 0;
+    private ImageIcon icon1, icon2;
     public Enemy1(int x, int y){
         super(x, y, 32, 32, 1, 1);
         gw = gh = 32;
@@ -40,10 +19,7 @@ public class Enemy1 extends Character{
           wayx = -wayx;
           isCollisionX = false;
         }
-
-        //12/28追加
         moveX(wayx);
-
         if(this.hp <= 0 && this.end == 0){
             //System.out.println("shinda!");
             this.through = 1;
@@ -53,15 +29,21 @@ public class Enemy1 extends Character{
         }
     }
 
+    public void moveX(int d){
+      super.moveX(d);
+      vx = d;
+    }
+    //描画処理
     public void draw(Graphics g, int offsetX, int offsetY){
-        //System.out.println((int)x +offsetX);
-
-        //追加
-        if(this.end != 1){
-          if(this.through == 1){this.end = 1;}
-          g.setColor(Color.WHITE);
-          g.fillRect((int)x +offsetX, (int)y+offsetY, width, height);
+        icon1 = new ImageIcon(getClass().getResource("pictures/enemy1-1.png"));
+        icon2 = new ImageIcon(getClass().getResource("pictures/enemy1-2.png"));
+        if(dir == 1){
+          image = icon1.getImage();
         }
+        else{
+          image = icon2.getImage();
+        }
+        g.drawImage(image, (int)x +offsetX, (int)y+offsetY, gw, gh,null);
     }
 }
 

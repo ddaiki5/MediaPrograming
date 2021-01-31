@@ -29,13 +29,17 @@ public class TitleView extends JPanel implements KeyListener{
         Font font3 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,30);
         g.setFont(font3);
         g.setColor(Color.WHITE);
-        g.drawString("SPACEでジャンプ・攻撃", 50, 160);
+        g.drawString("Sキーで戻る", 50, 160);
         Font font4 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,30);
         g.setFont(font4);
         g.setColor(Color.WHITE);
-        g.drawString("敵を倒してゴールを目指せ！", 50, 190);
+        g.drawString("SPACEでジャンプ・攻撃", 50, 190);
         Font font5 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,30);
         g.setFont(font5);
+        g.setColor(Color.WHITE);
+        g.drawString("敵を倒してゴールを目指せ！", 50, 220);
+        Font font6 = new Font("HGP創英角ﾎﾟｯﾌﾟ体",Font.ITALIC,30);
+        g.setFont(font6);
         g.setColor(Color.WHITE);
         g.drawString("SPACEで次へ", 150, 350);
         

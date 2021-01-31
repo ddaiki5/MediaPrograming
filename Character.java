@@ -17,6 +17,7 @@ public class Character {
     //一フレーム前の座標保存用
     public float pX, pY;
     public int gw,gh;
+    protected SoundManager soundManager;
     
     public Character(int x, int y, int w, int h, int hp, int characterNum){
         this.x = x;
@@ -36,6 +37,7 @@ public class Character {
         damageCount = 0;
         this.characterNum = characterNum;
         attackFlag = false;
+
     }
     
     
@@ -134,6 +136,7 @@ public class Character {
                             vy = 0;
                             if(field.getNum(i,j)==194){
                                 field.setNum(i,j,-1);
+                                soundManager.play("block");
                             }
                         }
                         //f=true;
@@ -219,5 +222,8 @@ public class Character {
         if(f){
             vy=0;
         }
+    }
+    public void setSoundManager(SoundManager soundManager){
+        this.soundManager = soundManager;
     }
 }
