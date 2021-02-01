@@ -72,6 +72,8 @@ public class Model extends Observable{
                     chara.get(i).update(field);
                 }
             }
+            //playerの位置を伝える
+            chara.get(i).setPlayerLocate(player.getX(), player.getY());
             //attackFlagのチェック
             enemyAttackFlagCheck(chara.get(i));
             //hpが0以下でリストから外す
@@ -167,7 +169,7 @@ public class Model extends Observable{
             if(c.hp<=0){
                 chara.remove(chara.indexOf(c));
                 score += 10000;
-                bossFlag = true;
+                stageClear = true;
             }
         }else if(c.getCharacterNum()==6){
             if(c.hp<=0){

@@ -11,7 +11,7 @@ public class SceneManager {
     SceneManager(){
         model = new Model(0);
         c = new CharaController(model);
-        sceneNum = 0;
+        sceneNum = 2;
         view = new MainFrame();
         view.setVisible(true);
     }

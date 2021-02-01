@@ -15,9 +15,10 @@ public class Character {
     //animationCount,count:アニメーション用,damageCount:damage時の一定時間無敵用
     protected int animationCount, count, damageCount;
     //一フレーム前の座標保存用
-    public float pX, pY;
+    public float pX, pY;//使ってない
     public int gw,gh;
     protected SoundManager soundManager;
+    protected float playerX, playerY;
     
     public Character(int x, int y, int w, int h, int hp, int characterNum){
         this.x = x;
@@ -28,8 +29,8 @@ public class Character {
         vx = 0;
         vy = 0;
         g = 0.08f;
-        isCollisionX = false;//使ってない
-        isCollisionY = false;//使ってない
+        isCollisionX = false;
+        isCollisionY = false;
         isGround = false;
         animationCount = 0;
         count = 0;
@@ -37,6 +38,8 @@ public class Character {
         damageCount = 0;
         this.characterNum = characterNum;
         attackFlag = false;
+        playerX = 0;
+        playerY = 0;
 
     }
     
@@ -225,5 +228,10 @@ public class Character {
     }
     public void setSoundManager(SoundManager soundManager){
         this.soundManager = soundManager;
+    }
+
+    public void setPlayerLocate(float x, float y){
+        playerX = x;
+        playerY = y;
     }
 }
