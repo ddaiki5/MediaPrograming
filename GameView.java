@@ -12,15 +12,18 @@ public class GameView extends JPanel implements Observer, ActionListener{
   private SceneManager sceneManager;
   private int viewWidth, viewHeight;
   private Dimension size;
-  public GameView(Model m, CharaController c,SceneManager sceneManager) {
+  private SoundManager soundManager;
+  public GameView(Model m,SoundManager soundManager,SceneManager sceneManager) {
     // model = new Model();
     // c = new CharaController(model);
     model = m;
     this.setBackground(Color.DARK_GRAY);
+    this.soundManager = soundManager;
     //this.requestFocusInWindow();
     setFocusable(true);
     //this.requestFocus();
     //this.setFocusable(true);
+    this.c = new CharaController(model);
     addKeyListener(c);
     timer = new javax.swing.Timer(10, this);
     timer.start();
@@ -30,6 +33,13 @@ public class GameView extends JPanel implements Observer, ActionListener{
     model.addObserver(this);
     //System.out.println("a");
     size= getSize();
+    if(model.getStageNum()==0){
+      soundManager.stop("field2");
+      soundManager.loop("field2");
+    }else if(model.getStageNum()==1){
+      soundManager.stop("boss");
+      soundManager.play("boss");
+    }
   }
   //描画update処理
   public void paintComponent(Graphics g) {
@@ -72,23 +82,31 @@ public class GameView extends JPanel implements Observer, ActionListener{
       field.update(size);
       this.repaint();
       if(model.gameOver){
+        soundManager.stop("field2");
+        soundManager.stop("boss");
         timer.stop();
         System.out.println("goal");
         //this.setFocusable(false);
         sceneManager.setSceneNum(4);
         sceneManager.changeScene();
       }else if(model.goal){
+        soundManager.stop("field2");
+        soundManager.stop("boss");
         timer.stop();
         System.out.println("goal");
         //this.setFocusable(false);
         if(sceneManager.getSceneNum()==1){
           sceneManager.setSceneNum(2);
         }else if(sceneManager.getSceneNum()==2){
+          soundManager.stop("field2");
+        soundManager.stop("boss");
           sceneManager.setSceneNum(4);
         }
         
         sceneManager.changeScene();
       }else if(model.stageClear){
+        soundManager.stop("field2");
+        soundManager.stop("boss");
         timer.stop();
         sceneManager.setSceneNum(5);
         sceneManager.changeScene();

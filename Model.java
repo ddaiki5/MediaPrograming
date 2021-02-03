@@ -13,32 +13,32 @@ public class Model extends Observable{
     public Player player;
     private boolean canMove, canJump;//使われていない
     public Field field;
-    private boolean pressedKeyRight, pressedKeyLeft;
-    private SceneManager sceneManager;
+    private boolean pressedKeyRight, pressedKeyLeft, isSoundLoad = false;
     public boolean goal,gameOver, bossFlag, stageClear;
-    private int score;
+    private int score,stageNum;
     private SoundManager soundManager;
-    private static final String[] soundNames = {"coin","jump","block","enter","shoot","stomp"};
-    
-    public Model(int i){
-        init(i);
+    private static final String[] soundNames = {"coin","jump","block","enter","shoot","stomp", "decide", "title","boss","field1","gameclear","gameover","fire","field2"};
+    private int ccc;//debug
+    public Model(int i, SoundManager soundManager){
+        init(i, soundManager);
     }
     //初期化用
-    public void init(int i){
+    public void init(int i, SoundManager soundManager){
         chara = new ArrayList<Character>();
         field = new Field(this, i);
-        soundManager = new SoundManager();
+        this.soundManager = soundManager;
         pressedKeyRight= false;
         pressedKeyLeft = false;
         goal = false;
         gameOver = false;
         bossFlag = false;
         stageClear = false;
+        stageNum = i;
         if(i==0){
             score = 0;
             
         }
-        
+        ccc = 0;
         loadSound();
     }
     
@@ -91,6 +91,12 @@ public class Model extends Observable{
             f.pX = f.getX();
             f.pY = f.getY();
         }
+
+        // if(ccc%100==0){
+        //     soundManager.stop("shoot");
+        //     soundManager.play("shoot");
+        // }
+        // ccc++;
         
         //e1.update(field);
         gameOverCheck();
@@ -114,6 +120,7 @@ public class Model extends Observable{
     //player ball攻撃 controllerで呼び出し
     public void shoot(){
         Ball ball;
+        soundManager.stop("shoot");
         soundManager.play("shoot");
         if(player.dir==0){
             ball = new Ball((int)player.getX()+player.getWidth()+6, (int)player.getY()+player.getHeight()/4);
@@ -130,9 +137,18 @@ public class Model extends Observable{
         //Boss
         if(c.getCharacterNum()==10){
             if(c.getAttackFlag()){
-                BossFire fire = new BossFire((int)c.getX()-6, (int)c.getY());
-                c.attacked();
-                chara.add(fire);
+                float vx = (float)((player.getX()-c.getX())/(Math.sqrt(Math.pow(player.getX()-c.getX(),2)+Math.pow(player.getY()-c.getY(),2))));
+                float vy = (float)((player.getY()-c.getY())/(Math.sqrt(Math.pow(player.getX()-c.getX(),2)+Math.pow(player.getY()-c.getY(),2))));
+                if(c.dir==1){
+                    BossFire fire = new BossFire((int)c.getX()-6, (int)c.getY()-20,vx,vy);
+                    c.attacked();
+                    chara.add(fire);
+                }else{
+                    BossFire fire = new BossFire((int)c.getX()+c.gw-48, (int)c.getY()-20,vx,vy);
+                    c.attacked();
+                    chara.add(fire);
+                }
+                
             }
         }
 
@@ -156,12 +172,12 @@ public class Model extends Observable{
     }
     //ballを消す
     private void endCheck(Character c){
-        if(c.getCharacterNum()==98 || c.getCharacterNum()==1 || c.getCharacterNum()==2 ){
+        if( c.getCharacterNum()==1 || c.getCharacterNum()==2 ){
             if(c.hp<=0){
                 chara.remove(chara.indexOf(c));
                 score += 100;
             }
-        }else if(c.getCharacterNum()==97 || c.getCharacterNum()==99){
+        }else if(c.getCharacterNum()==97 || c.getCharacterNum()==98 ||c.getCharacterNum()==99){
             if(c.hp<=0){
                 chara.remove(chara.indexOf(c));
             }
@@ -192,11 +208,13 @@ public class Model extends Observable{
                         }
                         if(c2.getCharacterNum()==6){//coinとの判定
                             c2.damaged(1);
+                            soundManager.stop("coin");
                             soundManager.play("coin");
                             return;
                         }
                         if(c1.pY+c1.getHeight()<c2.getY()){//上から
                             //player.jump();
+                            soundManager.stop("stomp");
                             soundManager.play("stomp");
                             c2.damaged(1);//enemyにダメージ
                             c1.setVy(-3);
@@ -209,13 +227,15 @@ public class Model extends Observable{
                         //     c1.damaged(1);
                         // }
                     }
+                }else if((c1.getCharacterNum()==98 && c2.getCharacterNum()==10) ||(c1.getCharacterNum()==10 && c2.getCharacterNum()==98)){
+                    return;
                 }else if(c1.getCharacterNum()==6 || c2.getCharacterNum()==6){
                     //return;
                 
                 }else if(c1.getCharacterNum()==99 || c2.getCharacterNum()==99){
                     c1.damaged(1);
                     c2.damaged(1);
-                }else if((c1.getCharacterNum()==98 || c2.getCharacterNum()==99) ||(c1.getCharacterNum()==99 || c2.getCharacterNum()==98)){
+                }else if((c1.getCharacterNum()==98 && c2.getCharacterNum()==99) ||(c1.getCharacterNum()==99 && c2.getCharacterNum()==98)){
                     if(c1.getCharacterNum()==99){
                         c1.damaged(1);
                     }else if(c2.getCharacterNum()==99){
@@ -245,9 +265,12 @@ public class Model extends Observable{
     }
     //音ファイル読み込み
     private void loadSound(){
-        for(int i=0;i<soundNames.length;i++){
-            soundManager.load(soundNames[i], "sounds/"+soundNames[i] + ".wav");
+        if(!isSoundLoad){
+            for(int i=0;i<soundNames.length;i++){
+                soundManager.load(soundNames[i], "sounds/"+soundNames[i] + ".wav");
+            }
         }
+        isSoundLoad = true;
     }
 
     
@@ -272,7 +295,12 @@ public class Model extends Observable{
     }
 
     public void soundPlay(String name){
+        soundManager.stop(name);
         soundManager.play(name);
+    }
+
+    public int getStageNum(){
+        return stageNum;
     }
 
     // public void collisionCheack(Character c){

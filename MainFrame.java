@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 public class MainFrame extends JFrame{
     Model model;
-    CharaController controller;
+    //CharaController controller;
     GameView view;
     public MainFrame(){
         super("test");

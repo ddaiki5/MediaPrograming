@@ -13,10 +13,12 @@ public class GameClearView extends JPanel  implements KeyListener{
 //View view;
     SceneManager sceneManager;
     private Model model;
+    private SoundManager soundManager;
     //TitleController c;
-    GameClearView(SceneManager sceneManager,Model model){
+    GameClearView(SoundManager soundManager,SceneManager sceneManager,Model model){
         this.sceneManager = sceneManager;
         this.model = model;
+        this.soundManager = soundManager;
         //c = new TitleController(this);
         
         Thread thread = new Thread(){
@@ -37,6 +39,8 @@ public class GameClearView extends JPanel  implements KeyListener{
 
           
         addKeyListener(this);
+        soundManager.stop("gameclear");
+        soundManager.play("gameclear");
         //setFocusable(true);
         //this.requestFocusInWindow();
     }
@@ -78,6 +82,7 @@ public class GameClearView extends JPanel  implements KeyListener{
     }
     public void changeScene(){
         //this.setFocusable(false);
+        soundManager.play("decide");
         sceneManager.setSceneNum(0);
         sceneManager.changeScene();
     }

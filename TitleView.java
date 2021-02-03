@@ -6,9 +6,11 @@ import java.awt.Font;
 public class TitleView extends JPanel implements KeyListener{
     //View view;
     SceneManager sceneManager;
+    private SoundManager soundManager;
     //TitleController c;
-    TitleView(SceneManager sceneManager){
+    TitleView(SoundManager soundManager,SceneManager sceneManager){
         this.sceneManager = sceneManager;
+        this.soundManager = soundManager;
         //c = new TitleController(this);
         this.addKeyListener(this);
         this.setFocusable(true);
@@ -47,6 +49,8 @@ public class TitleView extends JPanel implements KeyListener{
     }
     public void changeScene(){
         //this.setFocusable(false);
+        soundManager.stop("title");
+        soundManager.play("decide");
         sceneManager.setSceneNum(1);
         sceneManager.changeScene();
     }
@@ -90,6 +94,7 @@ class TitleController implements KeyListener{
         case KeyEvent.VK_A:
             break;
         case KeyEvent.VK_SPACE:
+
             v.changeScene();
             System.out.println("space");
             break;

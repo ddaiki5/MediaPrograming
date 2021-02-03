@@ -75,6 +75,28 @@ public class SoundManager implements LineListener{
         }
     }
 
+    public void loop(String name) {
+        Clip clip = clipMap.get(name);
+        //同じ音のときは途中で止めて再生する
+        if (clip != null) {
+            clip.stop();
+            clip.setFramePosition(0); 
+            clip.loop(20);
+        }
+    }
+
+
+    public void stop(String name){
+        Clip clip = clipMap.get(name);
+        if (clip != null) {
+            clip.stop();
+            clip.setFramePosition(0); 
+            //clip.start();
+        }
+    }
+
+    
+
     public void update(LineEvent event) {
         if (event.getType() == LineEvent.Type.STOP) {
             Clip clip = (Clip) event.getSource();
