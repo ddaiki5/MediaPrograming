@@ -49,7 +49,7 @@ public class TitleView extends JPanel implements KeyListener{
     }
     public void changeScene(){
         //this.setFocusable(false);
-        soundManager.stop("title");
+        soundManager.stop("title1");
         soundManager.play("decide");
         sceneManager.setSceneNum(1);
         sceneManager.changeScene();

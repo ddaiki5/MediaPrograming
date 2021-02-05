@@ -17,7 +17,7 @@ public class TitleView1 extends JPanel  implements KeyListener{
     TitleView1(SoundManager soundManager, SceneManager sceneManager){
         this.sceneManager = sceneManager;
         this.soundManager = soundManager;
-        soundManager.play("title");
+        soundManager.loop("title1");
         //c = new TitleController(this);
         
         Thread thread = new Thread(){
@@ -93,7 +93,7 @@ public class TitleView1 extends JPanel  implements KeyListener{
     public void changeScene(){
         //this.setFocusable(false);
         soundManager.play("decide");
-        soundManager.stop("title");
+        soundManager.stop("title1");
         sceneManager.setSceneNum(3);
         sceneManager.changeScene();
     }

@@ -17,7 +17,7 @@ public class Model extends Observable{
     public boolean goal,gameOver, bossFlag, stageClear;
     private int score,stageNum;
     private SoundManager soundManager;
-    private static final String[] soundNames = {"coin","jump","block","enter","shoot","stomp", "decide", "title","boss","field1","gameclear","gameover","fire","field2"};
+    private static final String[] soundNames = {"coin","jump","block","enter","shoot","stomp", "decide", "title","boss","field1","gameclear","gameover","fire","field2","title1"};
     private int ccc;//debug
     public Model(int i, SoundManager soundManager){
         init(i, soundManager);
