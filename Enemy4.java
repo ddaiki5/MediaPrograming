@@ -14,14 +14,14 @@ public class Enemy4 extends Character{
         this.dir = 1;
         this.attackFlag = false;
     }
+    //ジャンプ機能
     public void jum(){
-        //System.out.println(isGround);
         if(isGround){
             vy = -4f;
-            //System.out.println(vy);
             isGround = false;
         }
     }
+    //アップデート
     public void update(Field field){
         super.update(field);
         if(isGround == true && cooltime == 300){
@@ -34,13 +34,8 @@ public class Enemy4 extends Character{
         }
 
         this.cooltime += 1;
-
-        if(this.hp <= 0 && this.end == 0){
-            this.through = 1;
-            this.x = -100;
-            this.y = -100;
-        }
     }
+    //方向を変える
     public void dir(int d){ //dirを変える
         if(this.dir != d)
           this.dir = d;

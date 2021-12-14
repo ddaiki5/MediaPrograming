@@ -5,14 +5,12 @@ import java.util.*;
 
 public class CharaController implements KeyListener {
     protected Model model;
-    protected int dragStartX,dragStartY;
     public CharaController(Model a) {
       model = a;
     }
   
     public void keyTyped(KeyEvent e){}
     public void keyReleased(KeyEvent e){
-      int n = e.getKeyCode();
       switch(e.getKeyCode()){
         case KeyEvent.VK_D:
             model.move(1, false);
@@ -24,7 +22,7 @@ public class CharaController implements KeyListener {
             model.shoot();
             break;
         case KeyEvent.VK_SPACE:
-            System.out.println("jump!");
+            //System.out.println("jump!");
             model.jump();
             break;
         }

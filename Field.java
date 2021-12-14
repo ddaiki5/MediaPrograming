@@ -25,13 +25,12 @@ public class Field {
     private int[][] map;
     private float cs = 32;//cell_size
     private int ROW, COL;
-    //public boolean goal = false;
-    private boolean is83;
+    private boolean is83;//使っていない
     public int WIDTH,HEIGHT;
     private ImageIcon icon;
     private Image i13,i40,i117,i194,i195;
-    private int IMAGESIZE = 18,bi,bj;
-    private int offsetX,offsetY, count;
+    private int IMAGESIZE = 18,bi,bj;//bi、bjはクリア演出用　今は使っていない
+    private int offsetX,offsetY, count;//countはクリア演出用　今は使っていない
     private Model model;
     public Field(Model model,int i){
         init(model, i);
@@ -67,7 +66,7 @@ public class Field {
     //viewで毎フレーム呼ばれる
     public void update(Dimension size){
         updateOffset(size);
-        bossFinish();
+        //bossFinish();
     }
     //offsetのアップデート
     private void updateOffset(Dimension size){
@@ -129,7 +128,7 @@ public class Field {
                             model.soundPlay("enter");
                         }
                     }
-                    if(map[i][j]==90){
+                    if(map[i][j]==90){//使っていない
                         if(c.getCharacterNum()==0){
                             model.bossFlag = true;
                             return false;
@@ -176,7 +175,7 @@ public class Field {
         }
         
     }
-
+    //mapを元にキャラを設置
     private void charaSet(){
         for(int i=0;i<ROW;i++){
             for(int j=0;j<COL;j++){
@@ -197,7 +196,7 @@ public class Field {
         }
     }
 
-    private void bossFinish(){
+    private void bossFinish(){//使っていない
         if(model.bossFlag){
             count++;
             if(count%10==0){

@@ -10,7 +10,7 @@ public class GameView extends JPanel implements Observer, ActionListener{
   protected Field field;
   private javax.swing.Timer timer;
   private SceneManager sceneManager;
-  private int viewWidth, viewHeight;
+  private int viewWidth, viewHeight;//使っていない
   private Dimension size;
   private SoundManager soundManager;
   public GameView(Model m,SoundManager soundManager,SceneManager sceneManager) {
@@ -72,7 +72,7 @@ public class GameView extends JPanel implements Observer, ActionListener{
       f.draw(g, field.getOffsetX(), field.getOffsetY());
     }
   }
-  public void update(Observable o,Object arg){
+  public void update(Observable o,Object arg){//使っていない
     repaint();
   }
   //timerのupdate処理

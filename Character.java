@@ -4,7 +4,8 @@ import java.awt.event.*;
 import java.util.*;
 
 public class Character {
-    protected int width, height, hp, LimitY, mutekiTime,characterNum;//characterNum:種類判別用のナンバー
+    protected int width, height;//fieldとのあたり判定用
+    protected int hp, LimitY, mutekiTime,characterNum;//characterNum:種類判別用のナンバー
     protected float x, y, vx, vy, g;
     protected Image image;
     protected boolean isGround, isCollisionX, isCollisionY, isDamaged,attackFlag;

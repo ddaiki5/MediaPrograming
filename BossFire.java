@@ -14,6 +14,7 @@ public class BossFire extends Character{
         gw = 24;
         gh = 24;
         count = 0;
+        g=0;
         icon = new ImageIcon(getClass().getResource("pictures/bossfire.png"));
         image = icon.getImage();
     }
@@ -26,8 +27,6 @@ public class BossFire extends Character{
         count++;
     }
     
-    @Override
-    public void fall(){}
     @Override
     public void draw(Graphics g, int offsetX, int offsetY){
         //System.out.println("ok");

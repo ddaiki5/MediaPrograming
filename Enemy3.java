@@ -12,7 +12,7 @@ public class Enemy3 extends Character{
         super(x, y, 32, 32, 1, 1);
         gw = gh = 32;
     }
-
+    //ジャンプ機能
     public void jum(){
         //System.out.println(isGround);
         if(isGround){
@@ -28,7 +28,7 @@ public class Enemy3 extends Character{
             }
         }
     }
-
+    //アップデート
     public void update(Field field){
         super.update(field);
         if(isCollisionX){
@@ -40,14 +40,8 @@ public class Enemy3 extends Character{
         if(isGround == true){
           this.jum();
         }
-
-        if(this.hp <= 0 && this.end == 0){
-            this.through = 1;
-            this.x = -10;
-            this.y = -10;
-        }
     }
-
+    //移動
     public void moveX(int d){
       super.moveX(d);
       vx = d;

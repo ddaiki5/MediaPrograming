@@ -6,8 +6,8 @@ public class Boss extends Character{
     private int moveCounter, i, j;
     private ImageIcon icon;
     private Image move0, move1, move2,move3,move4,move5,move0r, move1r, move2r,move3r,move4r,move5r;
-    private boolean isFly;
-    private float ppx, ppy;
+    private boolean isFly;//浮遊しているか
+    private float ppx, ppy;//行動の的
     private Random random;
     public Boss(int x,int y){
         super(x, y, 32, 32, 25, 10);

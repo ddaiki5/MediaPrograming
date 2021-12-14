@@ -9,7 +9,7 @@ import java.io.*;
 public class Player extends Character{
     private static  final int IMAGESIZE = 32;
     private ImageIcon icon;
-    private Boolean isShootBall;
+    private Boolean isShootBall;//使っていない
     public Player(int x, int y){
         super(x, y, 32, 32, 3, 0);
         gw = gh = 32;

@@ -13,10 +13,12 @@ public class Model extends Observable{
     public Player player;
     private boolean canMove, canJump;//使われていない
     public Field field;
-    private boolean pressedKeyRight, pressedKeyLeft, isSoundLoad = false;
-    public boolean goal,gameOver, bossFlag, stageClear;
-    private int score,stageNum;
+    private boolean pressedKeyRight, pressedKeyLeft;//コントローラーからの入力
+    private boolean isSoundLoad = false;//sounManagerが呼び出されているか
+    public boolean goal,gameOver, bossFlag, stageClear;//シーン遷移用フラグ
+    private int score,stageNum;//scoreと現在のステージの番号
     private SoundManager soundManager;
+    //読み込む音データ指定
     private static final String[] soundNames = {"coin","jump","block","enter","shoot","stomp", "decide", "title","boss","field1","gameclear","gameover","fire","field2","title1"};
     private int ccc;//debug
     public Model(int i, SoundManager soundManager){
@@ -86,7 +88,7 @@ public class Model extends Observable{
                 collisionCheack(chara.get(i), chara.get(j));
             }
         }
-        //前フレームの座標を保存
+        //前フレームの座標を保存　使っていない
         for(Character f:chara){
             f.pX = f.getX();
             f.pY = f.getY();
@@ -303,55 +305,5 @@ public class Model extends Observable{
         return stageNum;
     }
 
-    // public void collisionCheack(Character c){
-    //     for(int i=0;i<field.getRow();i++){
-    //         for(int j=0;j<field.getCol();j++){
-    //             if((c.getX()+c.getVx()>=field.getCs()*j&&c.getX()+c.getVx()<=field.getCs()*(j+1))||(c.getX()+c.getVx()+c.getWidth()>field.getCs()*j&&c.getX()+c.getVx()+c.getWidth()<field.getCs()*(j+1))){
-    //                 if(c.getY()+c.getVy()>=field.getCs()*i&&c.getY()+c.getVy()<=field.getCs()*(i+1)){
-    //                     if(field.isHit(i, j)){
-    //                         System.out.println("1");
-    //                         if(!((c.getX()>=field.getCs()*j&&c.getX()<=field.getCs()*(j+1)))){
-    //                             c.checkIsCollisionX(true);
-    //                             //c.checkIsCollisionY(false);
-    //                             System.out.println("a");
-    //                             //c.setLocation((int)c.pX, (int)c.getY());
-    //                             //return;
-    //                         }
-    //                         if(!(c.getX()+c.getWidth()>field.getCs()*j&&c.getX()+c.getWidth()<field.getCs()*(j+1))){
-    //                             c.checkIsCollisionX(true);
-    //                             //c.checkIsCollisionY(false);
-    //                             System.out.println("b");
-    //                             //c.setLocation((int)c.pX, (int)c.getY());
-    //                             //return;
-    //                         }
-    //                         if(!(c.getY()>=field.getCs()*i&&c.getY()<=field.getCs()*(i+1))){
-    //                             //c.checkIsCollisionX(false);
-    //                             c.checkIsCollisionY(true);
-    //                             //c.setLocation((int)c.getX(), (int)field.getCs()*(i+1));
-    //                             System.out.println("ue");
-    //                             if(field.getNum(i, j)==2){
-    //                                 field.setNum(i, j, 0);
-    //                             }
-    //                             //return;
-    //                         }
-    //                         return;
-    //                     }
-    //                 c.checkIsGround(false);
-    //                 }else if(c.getY()+c.getVy()+c.getHeight()>field.getCs()*i&&c.getY()+c.getVy()+c.getHeight()<field.getCs()*(i+1)){
-    //                     if(field.isHit(i, j)){
-    //                         c.checkIsGround(true);
-    //                         c.checkIsCollisionX(false);
-    //                         c.checkIsCollisionY(false);
-
-    //                         return;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     c.checkIsCollisionX(false);
-    //     c.checkIsCollisionY(false);
-    // }
-    
 }
 

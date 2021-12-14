@@ -69,7 +69,7 @@ public class SoundManager implements LineListener{
         Clip clip = clipMap.get(name);
         //同じ音のときは途中で止めて再生する
         if (clip != null) {
-            clip.stop();
+
             clip.setFramePosition(0); 
             clip.start();
         }
@@ -79,7 +79,7 @@ public class SoundManager implements LineListener{
         Clip clip = clipMap.get(name);
         //同じ音のときは途中で止めて再生する
         if (clip != null) {
-            clip.stop();
+
             clip.setFramePosition(0); 
             clip.loop(20);
         }

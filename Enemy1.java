@@ -12,7 +12,7 @@ public class Enemy1 extends Character{
         super(x, y, 32, 32, 1, 1);
         gw = gh = 32;
     }
-
+    //アップデート
     public void update(Field field){
         super.update(field);
         if(isCollisionX){
@@ -20,15 +20,8 @@ public class Enemy1 extends Character{
           isCollisionX = false;
         }
         moveX(wayx);
-        if(this.hp <= 0 && this.end == 0){
-            //System.out.println("shinda!");
-            this.through = 1;
-            this.x = -10;
-            this.y = -10;
-
-        }
     }
-
+    //移動
     public void moveX(int d){
       super.moveX(d);
       vx = d;
